@@ -561,8 +561,34 @@
 			//  And animate using our newly-created object
 			return self._move(self.$container, obj);
 		};
-
-
+        /**
+         * Basic destroy handler. 
+         * calling this WILL remove all event handlers bound
+         * to the elements. Be sure to rebind your own
+         * event handlers after calling this.
+         */
+        self.destroy = function() {
+            self.stop();
+            self.destroyKeys();
+            self.destroySwipe();
+            self.$context.off();
+            self.$container.off();
+            self.$slides.off();
+            self.$context.unwrap();
+            self.$context.removeClass(this.prefix + this.options.animation);
+            self.$context.data('unslider',null);
+            self.$context = null;		
+            self.options = null;
+            self.$parent = null;
+            self.$container.css('width','');
+            self.$container.css('height','');
+            self.$container = null;
+            self.$slides.css('width','');
+            self.$slides.css('height','');
+            self.$slides = null;
+            self.$nav = null;
+            self.$arrows = null;
+        };
 		//  Fade between slides rather than, uh, sliding it
         self.animateFade = function(to) {
 			//  If we want to change the height of the slider
