@@ -580,6 +580,10 @@
             self.$context = null;		
             self.options = null;
             self.$parent = null;
+            self.$container.css('margin-left','');
+            self.$container.css('margin-top','');
+            self.$container.css('left','');
+            self.$container.css('top','');
             self.$container.css('width','');
             self.$container.css('height','');
             self.$container = null;
@@ -616,7 +620,13 @@
 		self._move = function($el, obj, callback, speed) {
 			if(callback !== false) {
 				callback = function() {
-					self.$context.trigger(self._ + '.moved');
+                    if(self.$context) {
+                        self.$context.trigger(self._ + '.moved');
+                    }
+                    else {
+                        // final destroy catcher, clean up events.
+                        $el.off();
+                    }
 				};
 			}
 
